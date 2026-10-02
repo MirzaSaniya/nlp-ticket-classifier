@@ -1,61 +1,90 @@
-# NLP Support Ticket Classifier
+# Nlp Ticket Classifier
 
-A practical text-classification pipeline that automatically routes support requests into categories such as billing, access, bug reports, and feature requests.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/) [![Tests](https://img.shields.io/badge/tests-passing-2E7D32)](#testing) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-## Business use case
+> Automatically route support tickets with TF-IDF features and logistic-regression classification.
 
-Support queues often receive large volumes of unstructured text. Automated routing can reduce manual triage and help downstream teams prioritize the right category quickly.
+## Why this project exists
 
-## Pipeline
+Support teams can automatically route incoming tickets to billing, access, bug, or feature queues before human triage.
+
+The implementation is intentionally small and reproducible so the underlying AI reasoning is easy to inspect, benchmark, and discuss.
+
+## AI concepts demonstrated
+
+TF-IDF, n-grams, linear classification, confidence scores, feature engineering, supervised learning
+
+## Architecture
+
+```mermaid
+flowchart LR
+    A[Ticket text] --> B[TF-IDF + n-grams]
+    B --> C[Logistic regression]
+    C --> D[Predicted category]
+    C --> E[Confidence score]
+```
+
+## Results
+
+The demo correctly routes three new example tickets to **access**, **bug**, and **feature** on the included toy dataset.
+
+Because the dataset is intentionally tiny, the results demonstrate the pipeline rather than production-level accuracy.
+
+## Project structure
 
 ```text
-Ticket text
-   |
-   v
-Text normalization
-   |
-   v
-TF-IDF vectorization
-   |
-   v
-Logistic Regression
-   |
-   v
-Predicted category + confidence
+nlp-ticket-classifier/
+├── README.md
+├── LICENSE
+├── requirements.txt
+├── examples/
+│   └── demo.py
+├── src/
+│   └── implementation
+└── tests/
+    └── test_*.py
 ```
 
-## Evaluation
-
-The demo trains on a tiny transparent dataset and reports accuracy plus predictions on held-out examples. The purpose is to demonstrate an end-to-end ML workflow, not to claim production performance from toy data.
-
-## Run
+## Run locally
 
 ```bash
-python examples/demo.py
+python -m venv .venv
+# macOS/Linux
+source .venv/bin/activate
+# Windows PowerShell
+# .venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+PYTHONPATH=. python examples/demo.py
 ```
 
-## Tests
+## Testing
 
 ```bash
-pytest -q
+PYTHONPATH=. pytest -q
 ```
 
-## Production extensions
+## Ideas for extending the project
 
-- larger labeled dataset
-- class imbalance handling
-- calibration and confidence thresholds
-- human-in-the-loop review for low-confidence predictions
-- monitoring for data drift
+- Scale the environment or dataset and compare runtime and search behavior.
+- Add richer visualizations or an interactive interface.
+- Introduce additional baselines and ablation experiments.
+- Add configuration files so experiments are reproducible from the command line.
 
-## CS221 connection
+## Portfolio note
 
-Inspired by supervised-learning and feature-based classification concepts commonly covered in CS221. The dataset, application framing, implementation, and documentation are independently developed.
+This project is independently structured and documented as a portfolio implementation inspired by AI concepts studied in CS221. Do not publish course-provided starter code, solutions, tests, or restricted materials.
 
 ## GitHub metadata
 
-**Repository name:** `nlp-ticket-classifier`
+**Repository name**
 
-**Description:** A lightweight NLP text classifier for routing support tickets using TF-IDF features and linear classification.
+`nlp-ticket-classifier`
 
-**Topics:** `natural-language-processing` `text-classification` `tfidf` `machine-learning` `scikit-learn` `python` `classification` `cs221`
+**Description**
+
+`Automatically route support tickets with TF-IDF features and logistic-regression classification.`
+
+**Topics**
+
+`natural-language-processing` `text-classification` `tfidf` `machine-learning` `scikit-learn` `python` `classification` `cs221`
